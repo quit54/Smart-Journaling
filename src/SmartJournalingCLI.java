@@ -5,21 +5,16 @@ import java.util.Scanner;
  * 智能记事本命令行交互系统
  */
 public class SmartJournalingCLI {
-
     private Scanner scanner;
-    private data.NoteManager noteManager;//这里是一个特殊类
+    private UserService userService;
+    private NoteService noteService;
 
-    /**
-     * 构造函数
-     */
     public SmartJournalingCLI() {
         this.scanner = new Scanner(System.in);
-        this.noteManager = new data.NoteManager();
+        this.userService = new UserService();
+        this.noteService = new NoteService();
     }
 
-    /**
-     * 启动程序主循环
-     */
     public void start() {
         while (true) {
             showMenu();
@@ -28,22 +23,14 @@ public class SmartJournalingCLI {
         }
     }
 
-    /**
-     * 显示菜单选项
-     */
     private void showMenu() {
         System.out.println("=== 智能记事本 ===");
-        System.out.println("1. 创建新笔记");
-        System.out.println("2. 查看所有笔记");
-        System.out.println("3. 搜索笔记");
-        System.out.println("4. 退出");
+        System.out.println("1. 登录");
+        System.out.println("2. 注册");
+        System.out.println("3. 退出");
         System.out.print("请选择操作: ");
     }
 
-    /**
-     * 获取用户选择
-     * @return 用户输入的数字选择
-     */
     private int getUserChoice() {
         try {
             return Integer.parseInt(scanner.nextLine().trim());
@@ -53,22 +40,15 @@ public class SmartJournalingCLI {
         }
     }
 
-    /**
-     * 处理用户选择
-     * @param choice 用户选择的选项
-     */
     private void handleChoice(int choice) {
         switch (choice) {
             case 1:
-                createNote();
+                login();
                 break;
             case 2:
-                viewAllNotes();
+                register();
                 break;
             case 3:
-                searchNotes();
-                break;
-            case 4:
                 System.out.println("程序退出");
                 scanner.close();
                 System.exit(0);
@@ -77,9 +57,63 @@ public class SmartJournalingCLI {
         }
     }
 
-    /**
-     * 创建新笔记
-     */
+    private void login() {
+        System.out.print("请输入邮箱: ");
+        String email = scanner.nextLine();
+        System.out.print("请输入密码: ");
+        String password = scanner.nextLine();
+
+        if (userService.login(email, password)) {
+            System.out.println("登录成功！");
+            showNoteMenu();
+        } else {
+            System.out.println("登录失败，用户不存在或密码错误");
+        }
+    }
+
+    private void register() {
+        System.out.print("请输入用户名: ");
+        String name = scanner.nextLine();
+        System.out.print("请输入邮箱: ");
+        String email = scanner.nextLine();
+        System.out.print("请输入密码: ");
+        String password = scanner.nextLine();
+
+        if (userService.register(name, email, password)) {
+            System.out.println("注册成功！");
+        } else {
+            System.out.println("注册失败");
+        }
+    }
+
+    private void showNoteMenu() {
+        while (true) {
+            System.out.println("\n=== 笔记服务 ===");
+            System.out.println("1. 创建新笔记");
+            System.out.println("2. 查看所有笔记");
+            System.out.println("3. 搜索笔记");
+            System.out.println("4. 返回主菜单");
+            System.out.print("请选择操作: ");
+
+            int choice = getUserChoice();
+            switch (choice) {
+                case 1:
+                    createNote();
+                    break;
+                case 2:
+                    viewAllNotes();
+                    break;
+                case 3:
+                    searchNotes();
+                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("无效选择，请重新输入");
+            }
+        }
+    }
+
     private void createNote() {
         System.out.print("请输入笔记标题: ");
         String title = scanner.nextLine();
@@ -87,16 +121,13 @@ public class SmartJournalingCLI {
         System.out.print("请输入笔记内容: ");
         String content = scanner.nextLine();
 
-        data.Note note = new data.Note(title, content);
-        noteManager.addNote(note);
+        Note note = new Note(title, content);
+        noteService.createNote(note);
         System.out.println("笔记创建成功！");
     }
 
-    /**
-     * 查看所有笔记
-     */
     private void viewAllNotes() {
-        List<data.Note> notes = noteManager.getAllNotes();
+        List<Note> notes = noteService.getAllNotes();
         if (notes.isEmpty()) {
             System.out.println("暂无笔记");
             return;
@@ -106,16 +137,33 @@ public class SmartJournalingCLI {
         for (int i = 0; i < notes.size(); i++) {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle());
         }
+
+        // 添加选择查看笔记内容的功能
+        System.out.print("请输入要查看的笔记编号: ");
+        int choice = getUserChoice();
+
+        if (choice >= 1 && choice <= notes.size()) {
+            Note selectedNote = notes.get(choice - 1);
+            showNoteContent(selectedNote);
+        } else {
+            System.out.println("无效选择");
+        }
+    }
+    private void showNoteContent(Note note) {
+        System.out.println("\n=== 笔记内容 ===");
+        System.out.println("标题: " + note.getTitle());
+        System.out.println("创建时间: " + note.getCreatedAt());
+        System.out.println("更新时间: " + note.getUpdatedAt());
+        System.out.println("内容:");
+        System.out.println(note.getContent());
+        System.out.println("==================\n");
     }
 
-    /**
-     * 搜索笔记
-     */
     private void searchNotes() {
         System.out.print("请输入搜索关键词: ");
         String keyword = scanner.nextLine();
 
-        List<data.Note> results = noteManager.searchNotes(keyword);
+        List<Note> results = noteService.searchNotes(keyword);
         if (results.isEmpty()) {
             System.out.println("未找到相关笔记");
             return;
@@ -126,13 +174,5 @@ public class SmartJournalingCLI {
             System.out.println((i + 1) + ". " + results.get(i).getTitle());
         }
     }
-
-    /**
-     * 主方法
-     * @param args 命令行参数
-     */
-    public static void main(String[] args) {
-        SmartJournalingCLI cli = new SmartJournalingCLI();
-        cli.start();
-    }
 }
+
