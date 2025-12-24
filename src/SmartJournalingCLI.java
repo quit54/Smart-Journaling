@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class SmartJournalingCLI {
 
     private Scanner scanner;
-    private data.NoteManager noteManager;//这里是一个特殊的数据结构
+    private data.NoteManager noteManager;//这里是一个特殊类
 
     /**
      * 构造函数
