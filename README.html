@@ -1,7 +1,7 @@
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Smart-Journaling 智能日记</title>
+  <title>Smart-Journaling Intelligent Diary</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -103,64 +103,64 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Smart-Journaling（智能日记）</h1>
-    <p style="text-align: center; color: #666;">
-      A simple app to help you journal and keep track of your thoughts.
-    </p>
+<div class="container">
+  <h1>Smart-Journaling (Intelligent Diary)</h1>
+  <p style="text-align: center; color: #666;">
+    A simple app to help you journal and keep track of your thoughts.
+  </p>
 
-    <h2>技术文档实现思考</h2>
-    <ul>
-      <li><span class="number">1</span> 创建一个用户实体类，存储用户信息，如用户名、密码、邮箱。</li>
-      <li><span class="number">2</span> 创建一个笔记实体类，存储笔记信息，如标题、内容、创建时间、更新时间、用户ID等。</li>
-      <li><span class="number">3</span> 创建一个笔记服务类，提供笔记的增删改查功能。</li>
-      <li><span class="number">4</span> 创建一个用户服务类，提供用户注册、用户登录的基本功能。</li>
-      <li><span class="number">5</span> 创建一个笔记控制器类，处理用户对笔记的请求。</li>
-      <li><span class="number">6</span> 具备一个存储控制类，用于存储笔记数据，根据用户输入的各项数据，令代码在本地进行一个存储，采用输入流和输出流进行存储，并不连接数据库，存储的格式主要分为两个类型：TXT存储笔记的全部内容，JSON存储笔记的标题、内容、创建时间、更新时间、用户ID等信息。</li>
-    </ul>
+  <h2>Technical Documentation Implementation Considerations</h2>
+  <ul>
+    <li><span class="number">1</span> Create a User entity class to store user information, such as username, password, and email.</li>
+    <li><span class="number">2</span> Create a Note entity class to store note information, such as title, content, creation time, update time, user ID, etc.</li>
+    <li><span class="number">3</span> Create a Note service class to provide CRUD (Create, Read, Update, Delete) functionality for notes.</li>
+    <li><span class="number">4</span> Create a User service class to provide basic user registration and login functionality.</li>
+    <li><span class="number">5</span> Create a Note controller class to handle user requests for notes.</li>
+    <li><span class="number">6</span> Implement a storage control class for storing note data. Based on various data input by the user, the code will perform local storage using input and output streams without connecting to a database. The storage format is mainly divided into two types: TXT files store the full content of the note, and JSON files store the note's title, content, creation time, update time, user ID, and other information.</li>
+  </ul>
 
-    <h2>项目实现初步思想</h2>
-    <ul>
-      <li><span class="number">1</span> 用户操作（登录与退出）在命令行中进行。</li>
-      <li><span class="number">2</span> 笔记输入（标题， 内容）在命令行中进行，笔记存储在TXT文件中，笔记内容保存在JSON文件中。</li>
-      <li><span class="number">3</span> 笔记被用户调用的时候，需要读取TXT文件，并解析JSON文件，将笔记内容展示给用户。</li>
-      <li><span class="number">4</span> 用户在书写笔记的过程中，可以选择按 "esc" 键保存笔记并且返回到进度4。</li>
-      <li><span class="number">5</span> 从一个新用户的注册到实现笔记，界面如下，统一在命令行中进行：
-        <ul>
-          <li><span class="sub-number">1</span> 开始界面，调用API显示日期，同时分布两个选项：1. 登录 2. 注册</li>
-          <li><span class="sub-number">2</span> 登录选项：输入邮箱一行，密码一行。从存储的用户信息中进行登陆验证，如果发现此用户不在数据中，输出“此用户不存在”。</li>
-          <li><span class="sub-number">3</span> 注册选项：输入用户名一行，邮箱一行，密码一行。将用户信息存储在数据中，同时输出“注册成功”。</li>
-          <li><span class="sub-number">4</span> 进度2和进度3同时跳转进度4，进度四内容为笔记服务显示内容。</li>
-          <li><span class="sub-number">5</span> 笔记服务分别为：1. 创建笔记 2. 删除笔记 3. 修改笔记 4. 查看笔记 5. 退出，笔记内容，首先输入：标题，之后是内容，其次系统需要自行记录创建的日期时间。</li>
-          <li><span class="sub-number">6</span> 同时在笔记的书写途中允许用户选择退出，用户选择按 "esc" 键，笔记内容保存在TXT文件中，笔记内容保存在JSON文件中，并返回到进度4。</li>
-          <li><span class="sub-number">7</span> 退出选项：用户选择退出，系统将退出。</li>
-        </ul>
-      </li>
-    </ul>
+  <h2>Project Implementation Preliminary Idea</h2>
+  <ul>
+    <li><span class="number">1</span> User operations (login and logout) are performed in the command line.</li>
+    <li><span class="number">2</span> Note input (title, content) is performed in the command line. Notes are stored in TXT files, and note metadata is saved in JSON files.</li>
+    <li><span class="number">3</span> When a note is called by the user, the TXT file needs to be read, and the JSON file needs to be parsed to display the note content to the user.</li>
+    <li><span class="number">4</span> While writing a note, the user can choose to press the "esc" key to save the note and return to step 4.</li>
+    <li><span class="number">5</span> The interface from a new user's registration to note implementation is as follows, all conducted in the command line:
+      <ul>
+        <li><span class="sub-number">1</span> Start interface: Call an API to display the date, simultaneously presenting two options: 1. Login 2. Register.</li>
+        <li><span class="sub-number">2</span> Login option: Input email on one line, password on the next line. Perform login verification using stored user information. If the user is not found in the data, output "User does not exist".</li>
+        <li><span class="sub-number">3</span> Register option: Input username on one line, email on the next line, password on the next line. Store user information in the data and output "Registration successful".</li>
+        <li><span class="sub-number">4</span> Both step 2 and step 3 jump to step 4, whose content is the note service display.</li>
+        <li><span class="sub-number">5</span> Note services are: 1. Create Note 2. Delete Note 3. Modify Note 4. View Note 5. Exit. For note content, first input the title, then the content. The system should automatically record the creation date and time.</li>
+        <li><span class="sub-number">6</span> Additionally, while writing a note, the user is allowed to choose to exit. If the user presses the "esc" key, the note content is saved in a TXT file, the note metadata is saved in a JSON file, and the system returns to step 4.</li>
+        <li><span class="sub-number">7</span> Exit option: If the user chooses to exit, the system will shut down.</li>
+      </ul>
+    </li>
+  </ul>
 
-    <h2>时间段问候语规则</h2>
-    <table>
-      <tr>
-        <th>时间段 (GMT+8)</th>
-        <th>问候语</th>
-      </tr>
-      <tr>
-        <td>00:00 - 11:59</td>
-        <td>早上好 (Good Morning)</td>
-      </tr>
-      <tr>
-        <td>12:00 - 16:59</td>
-        <td>下午好 (Good Afternoon)</td>
-      </tr>
-      <tr>
-        <td>17:00 - 23:59</td>
-        <td>晚上好 (Good Evening)</td>
-      </tr>
-    </table>
+  <h2>Time-Based Greeting Rules</h2>
+  <table>
+    <tr>
+      <th>Time Period (GMT+8)</th>
+      <th>Greeting</th>
+    </tr>
+    <tr>
+      <td>00:00 - 11:59</td>
+      <td>Good Morning</td>
+    </tr>
+    <tr>
+      <td>12:00 - 16:59</td>
+      <td>Good Afternoon</td>
+    </tr>
+    <tr>
+      <td>17:00 - 23:59</td>
+      <td>Good Evening</td>
+    </tr>
+  </table>
 
-    <div class="footer">
-      <span style="font-size: 30px;">感谢您的浏览！</span>
-    </div>
+  <div class="footer">
+    <span style="font-size: 30px;">Thanks for your attention.</span>
   </div>
+</div>
 </body>
 </html>

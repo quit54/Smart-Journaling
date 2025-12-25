@@ -1,34 +1,35 @@
+
 # Smart-Journaling
 
 A simple app to help you journal and keep track of your thoughts.
 
-**云南大学 马来亚学院 人工智能 编程一班**
-
---- 
-## 技术文档实现思考：
-1. 创建一个用户实体类，存储用户信息，如用户名、密码、邮箱。
-2. 创建一个笔记实体类，存储笔记信息，如标题、内容、创建时间、更新时间、用户ID等。
-3. 创建一个笔记服务类，提供笔记的增删改查功能。
-4. 创建一个用户服务类，提供用户注册、用户登录的基本功能。
-5. 创建一个笔记控制器类，处理用户对笔记的请求。
-6. 具备一个存储控制类，用于存储笔记数据，根据用户输入的各项数据，令代码在本地进行一个存储，采用输入流和输出流进行存储，并不连接数据库，存储的格式主要分为两个类型：TXT存储笔记的全部内容，JSON存储笔记的标题、内容、创建时间、更新时间、用户ID等信息。
+**Yunnan University, Malaya College, Artificial Intelligence, Programming Class 1**
 
 ---
-### 项目实现初步思想：创建一个支持用户在本地进行笔记记录和增删改查的功能。
+## Technical Documentation Implementation Considerations:
+1. Create a User entity class to store user information, such as username, password, and email.
+2. Create a Note entity class to store note information, such as title, content, creation time, update time, user ID, etc.
+3. Create a Note service class to provide CRUD (Create, Read, Update, Delete) functionality for notes.
+4. Create a User service class to provide basic user registration and login functionality.
+5. Create a Note controller class to handle user requests for notes.
+6. Implement a storage control class for storing note data. Based on various data input by the user, the code will perform local storage using input and output streams without connecting to a database. The storage format is mainly divided into two types: TXT files store the full content of the note, and JSON files store the note's title, content, creation time, update time, user ID, and other information.
 
 ---
-## 最初实现思路:
-1. 用户操作（登录与退出）在命令行中进行。
-2. 笔记输入（标题， 内容）在命令行中进行，笔记存储在TXT文件中，笔记内容保存在JSON文件中。
-3. 笔记被用户调用的时候，需要读取TXT文件，并解析JSON文件，将笔记内容展示给用户。
-4. 用户在书写笔记的过程中，可以选择按"esc"键保存笔记并且返回到进度4.
-5. 从一个新用户的注册到实现笔记，界面如下，统一在命令行中进行：
-    1. 开始界面，调用API显示日期![img_3.png](img_3.png)， 同时分布两个选项：1. 登录 2. 注册
-    2. 登录选项:输入邮箱一行，密码一行。从存储的用户信息中进行登陆验证，如果发现此用户不在数据中，输出“此用户不存在”。
-    3. 注册选项:输入用户名一行，邮箱一行，密码一行。将用户信息存储在数据中，同时输出“注册成功”。
-    4. 进度2和进度3同时跳转进度4，进度四内容为笔记服务显示内容。
-    5. 笔记服务分别为：1. 创建笔记 2. 删除笔记 3. 修改笔记 4. 查看笔记 5. 退出，笔记内容，首先输入：标题，之后是内容，其次系统需要自行记录创建的日期时间。
-    6. 同时在笔记的书写途中允许用户选择退出，用户选择按"esc"键，笔记内容保存在TXT文件中，笔记内容保存在JSON文件中，并返回到进度4。
-### (ง๑ •̀_•́)ง后续，我将添加调用API，对于笔记进行的分析部分.
-### (,,・ω・,,)已添加日期问候语功能
-# thanks for your attention（感谢您的阅读）d(`･∀･)b
+### Project Implementation Preliminary Idea: Create a function that supports users in locally recording, creating, deleting, modifying, and querying notes.
+
+---
+## Initial Implementation Plan:
+1. User operations (login and logout) are performed in the command line.
+2. Note input (title, content) is performed in the command line. Notes are stored in TXT files, and note metadata is saved in JSON files.
+3. When a note is called by the user, the TXT file needs to be read, and the JSON file needs to be parsed to display the note content to the user.
+4. While writing a note, the user can choose to press the "esc" key to save the note and return to step 4.
+5. The interface from a new user's registration to note implementation is as follows, all conducted in the command line:
+   1. Start interface: Call an API to display the date ![img_3.png](img_3.png), simultaneously presenting two options: 1. Login 2. Register.
+   2. Login option: Input email on one line, password on the next line. Perform login verification using stored user information. If the user is not found in the data, output "User does not exist".
+   3. Register option: Input username on one line, email on the next line, password on the next line. Store user information in the data and output "Registration successful".
+   4. Both step 2 and step 3 jump to step 4, whose content is the note service display.
+   5. Note services are: 1. Create Note 2. Delete Note 3. Modify Note 4. View Note 5. Exit. For note content, first input the title, then the content. The system should automatically record the creation date and time.
+   6. Additionally, while writing a note, the user is allowed to choose to exit. If the user presses the "esc" key, the note content is saved in a TXT file, the note metadata is saved in a JSON file, and the system returns to step 4.
+### (ง๑ •̀_•́)ง Next, I will add the part about calling APIs to analyze the notes.
+### (,,・ω・,,) The date greeting function has been added.
+# Thanks for your attention. d(`･∀･)b
