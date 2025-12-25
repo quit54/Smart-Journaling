@@ -16,11 +16,33 @@ public class SmartJournalingCLI {
     }
 
     public void start() {
+        // 添加问候语功能
+        showGreeting();
+
         while (true) {
             showMenu();
             int choice = getUserChoice();
             handleChoice(choice);
         }
+    }
+
+    // 新增方法：显示问候语
+    private void showGreeting() {
+        // 获取当前时间（GMT+8）
+        java.time.LocalDateTime now = java.time.LocalDateTime.now(java.time.ZoneId.of("Asia/Shanghai"));
+
+        int hour = now.getHour();
+
+        String greeting;
+        if (hour >= 0 && hour <= 11) {
+            greeting = "早上好 (Good Morning)";
+        } else if (hour >= 12 && hour <= 16) {
+            greeting = "下午好 (Good Afternoon)";
+        } else { // hour >= 17 && hour <= 23
+            greeting = "晚上好 (Good Evening)";
+        }
+
+        System.out.println("=== " + greeting + " ===");
     }
 
     private void showMenu() {
